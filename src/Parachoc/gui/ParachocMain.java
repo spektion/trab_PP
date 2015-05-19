@@ -16,8 +16,7 @@ import javax.swing.JPanel;
  * @author a
  */
 public class ParachocMain extends javax.swing.JFrame {
-    private FormEspecialista formespecialista;
-    private FormAdmin formadmin;
+
 
     /**
      * Creates new form ParachocMain2
@@ -32,12 +31,6 @@ public class ParachocMain extends javax.swing.JFrame {
         JPanel panellistaragentes = new JPanel(new BorderLayout());
     }
     public void initApp(){
-        
-        formespecialista = new FormEspecialista();
-        formadmin = new FormAdmin();
-       
-        jPanel1.add(formespecialista, "formespecialista");
-        jPanel1.add(formadmin, "formadmin");
         
         
     }
@@ -60,6 +53,7 @@ public class ParachocMain extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,6 +126,15 @@ public class ParachocMain extends javax.swing.JFrame {
                 jMenu4ActionPerformed(evt);
             }
         });
+
+        jMenuItem4.setText("Abrir");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Admin");
@@ -174,8 +177,13 @@ public class ParachocMain extends javax.swing.JFrame {
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         // TODO add your handling code here:
         
-        ((CardLayout) jPanel1.getLayout()).show(jPanel1, "formTit");
+        
     }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        ((CardLayout) jPanel1.getLayout()).show(jPanel1, "formespecialista");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,6 +230,7 @@ public class ParachocMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
