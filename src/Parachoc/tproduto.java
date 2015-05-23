@@ -9,6 +9,4 @@ package Parachoc;
  *
  * @author a
  */
-public class Armazem {
-    
-}
+public enum tproduto{TabChoc, TabChocAmendPassas,TabChocCaram,AmendChoc};  //Tipos de seguro

@@ -10,8 +10,8 @@ package Parachoc;
  * @author a
  */
 public class Ingrediente {
-   private String nome;
-   int quantidadeemstock;
+   public String nome;
+   public int quantidadeemstock;
    
    public Ingrediente(String n, int q){
        this.nome=n;
@@ -19,13 +19,41 @@ public class Ingrediente {
    }
    
    public void adicionarstock(int q){
-       this.quantidadeemstock=this.quantidadeemstock+q;
+       this.setQuantidadeemstock(this.getQuantidadeemstock() + q);
    }
    
    public String toString(){
        String exit;
        
-       exit="Ingrediente "+this.nome+"Quantidade em stock: "+this.quantidadeemstock+"kg";
+       exit="Ingrediente: "+this.getNome()+" Quantidade em stock: "+this.getQuantidadeemstock()+"g";
        return exit;
    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the quantidadeemstock
+     */
+    public int getQuantidadeemstock() {
+        return quantidadeemstock;
+    }
+
+    /**
+     * @param quantidadeemstock the quantidadeemstock to set
+     */
+    public void setQuantidadeemstock(int quantidadeemstock) {
+        this.quantidadeemstock = quantidadeemstock;
+    }
 }

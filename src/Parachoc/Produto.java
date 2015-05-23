@@ -13,10 +13,14 @@ import java.util.ArrayList;
  */
 
 public class Produto {
-    private String nome;
-    int peso;
-    ArrayList<Ingrediente> listaingredientes;
+    public String nome;
+    public int peso;
+    public ArrayList<Ingrediente> listaingredientes;
     
+    public Produto(){
+        
+        
+    }
     
     public Produto(String n, int p, ArrayList<Ingrediente> l){
         this.nome=n;
@@ -24,10 +28,47 @@ public class Produto {
         listaingredientes=l;
         
     }
-    
-    public void produzir(){
-        
-        
-        
+ 
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the peso
+     */
+    public int getPeso() {
+        return peso;
+    }
+
+    /**
+     * @param peso the peso to set
+     */
+    public void setPeso(int peso) {
+        this.peso = peso;
+    }
+
+    /**
+     * @return the listaingredientes
+     */
+    public ArrayList<Ingrediente> getListaingredientes() {
+        return listaingredientes;
+    }
+
+    /**
+     * @param listaingredientes the listaingredientes to set
+     */
+    public void setListaingredientes(ArrayList<Ingrediente> listaingredientes) {
+        this.listaingredientes = listaingredientes;
     }
 }
