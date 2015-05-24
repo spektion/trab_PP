@@ -12,18 +12,26 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 /**
  *
  * @author a
  */
 public class ParachocMain extends javax.swing.JFrame {
-
-
+    ArrayList<Ingrediente> listaingredientes;
+    ArrayList<Especialista> listaespecialistas;
     /**
      * Creates new form ParachocMain2
      */
+
     
-    BD bd = new BD();
+    public void adiciona_log(String s){
+        
+       jTextareaadmin.append(s);
+       jTextareaadmin.append("\n");
+       jTextareaadmin.update(jTextareaadmin.getGraphics());
+    }
+    
     public ParachocMain() {
         initComponents();
         initApp();
@@ -35,40 +43,39 @@ public class ParachocMain extends javax.swing.JFrame {
     
     
     public void initApp(){
-        
-        try {
-            FileInputStream fis = new FileInputStream("dados.dat");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            BD tbd=(BD)ois.readObject(); 
-            bd=tbd;
-            ois.close();
-           // System.out.println("Ficheiro lido com sucesso");
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
+        listaingredientes = new ArrayList();
+        listaespecialistas = new ArrayList();
         
         // Criacao manual para testes //NAO APAGAR
-        bd.getListaingredientes().add(new Ingrediente("Cacau",1000));
-        bd.getListaingredientes().add(new Ingrediente("Amendoas",500));
-        bd.getListaingredientes().add(new Ingrediente("Caramelo",250));
-        bd.getListaingredientes().add(new Ingrediente("Passas",125));
+        listaingredientes.add(new Ingrediente("Cacau",1000));
+        this.adiciona_log("Adicionado 1000g de cacau");
+        listaingredientes.add(new Ingrediente("Amendoas",500));
+        this.adiciona_log("Adicionado 500g de amendoas");
+        listaingredientes.add(new Ingrediente("Caramelo",250));
+        this.adiciona_log("Adicionado 250g de caramelo");
+        listaingredientes.add(new Ingrediente("Passas",125));
+        this.adiciona_log("Adicionado 125g de passas");
         
-        for (int i=0; i<bd.getListaingredientes().size();i++){
+        for (int i=0; i<listaingredientes.size();i++){
            // jTextareaarmazem.
             if (jTextareaarmazem.getText().compareTo("")==0)
-                jTextareaarmazem.append(bd.getListaingredientes().get(i).toString());
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
             else{
                 jTextareaarmazem.append("\n");
                 jTextareaarmazem.append("\n");
-                jTextareaarmazem.append(bd.getListaingredientes().get(i).toString());
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
             }
         }
         
         UnidadeProducao Threadtabletesimples=new UnidadeProducao(tproduto.TabChoc,new Especialista(),new Produto());
+        //this.adiciona_log("Thread Threadtabletesimples criada");
+        
         UnidadeProducao Threadtableteamendoas=new UnidadeProducao(tproduto.TabChocAmendPassas,null,null);
+        this.adiciona_log("Thread Threadtableteamendoas criada");
         UnidadeProducao Threadtabletecaramelo=new UnidadeProducao(tproduto.TabChocCaram, null, null);
+        this.adiciona_log("Thread Threadtabletecaramelo criada");
         UnidadeProducao Threadamendoas=new UnidadeProducao(tproduto.AmendChoc,null,null);
+        this.adiciona_log("Thread Threadamendoas criada");
         
         jTextareauproducao.append(Threadtabletesimples.toString());
         jTextareauproducao.append("\n");
@@ -81,45 +88,56 @@ public class ParachocMain extends javax.swing.JFrame {
         jTextareauproducao.append("\n");
         jTextareauproducao.append(Threadamendoas.toString());
         
-        bd.getListaespecialistas().add(new Especialista("Luis Franco",tproduto.TabChoc));
-        bd.getListaespecialistas().add(new Especialista("Vitor Filipe",tproduto.TabChocAmendPassas));
-        bd.getListaespecialistas().add(new Especialista("Goncalo Faria",tproduto.TabChocCaram));
-        bd.getListaespecialistas().add(new Especialista("Luis Filipe Faria",tproduto.AmendChoc));
+        listaespecialistas.add(new Especialista("Luis Franco",tproduto.TabChoc));
+        this.adiciona_log("Especialista Luis Franco criado");
+        listaespecialistas.add(new Especialista("Vitor Filipe",tproduto.TabChocAmendPassas));
+        this.adiciona_log("Especialista Vitor Filipe criado");
+        listaespecialistas.add(new Especialista("Goncalo Faria",tproduto.TabChocCaram));
+        this.adiciona_log("Especialista Goncalo Faria criado");
+        listaespecialistas.add(new Especialista("Luis Filipe Faria",tproduto.AmendChoc));
+        this.adiciona_log("Especialista Luis Filipe Faria criado");
+        listaespecialistas.add(new Especialista("Jacques Arsac",tproduto.TabChoc));
+        this.adiciona_log("Especialista Jacques Arsac criado");
+        listaespecialistas.add(new Especialista("Enviusamento",tproduto.TabChocAmendPassas));
+        this.adiciona_log("Especialista Enviusamento criado");
+        listaespecialistas.add(new Especialista("Tijolosde8",tproduto.TabChocCaram));
+        this.adiciona_log("Especialista Tijolosde8 criado");
+        listaespecialistas.add(new Especialista("Erasmus",tproduto.AmendChoc));
+        this.adiciona_log("Especialista Erasmus criado");
         
-        bd.getListaespecialistas().add(new Especialista("Jacques Arsac",tproduto.TabChoc));
-        bd.getListaespecialistas().add(new Especialista("Enviusamento",tproduto.TabChocAmendPassas));
-        bd.getListaespecialistas().add(new Especialista("Tijolosde8",tproduto.TabChocCaram));
-        bd.getListaespecialistas().add(new Especialista("Erasmus",tproduto.AmendChoc));
-        
-        
-        for (int i=0; i<bd.getListaespecialistas().size();i++){
+        for (int i=0; i<listaespecialistas.size();i++){
            // jTextareaarmazem.
             if (jTextareaespecialistas.getText().compareTo("")==0)
-                jTextareaespecialistas.append(bd.getListaespecialistas().get(i).toString());
+                jTextareaespecialistas.append(listaespecialistas.get(i).toString());
             else{
                 jTextareaespecialistas.append("\n");
                 jTextareaespecialistas.append("\n");
-                jTextareaespecialistas.append(bd.getListaespecialistas().get(i).toString());
+                jTextareaespecialistas.append(listaespecialistas.get(i).toString());
             }
         }
         
-        if (bd.getListaingredientes().get(0).quantidadeemstock>99){
-            int ntabletes=bd.getListaingredientes().get(0).quantidadeemstock/100;
-            for (int i=0;i<bd.listaespecialistas.size();i++){
-                if ((bd.listaespecialistas.get(i).especialidade==tproduto.TabChoc)&&(bd.listaespecialistas.get(i).alocado==false)){
+        
+        if (listaingredientes.get(0).quantidadeemstock>99){
+            int ntabletes=listaingredientes.get(0).quantidadeemstock/100;
+            for (int i=0;i<listaespecialistas.size();i++){
+                if ((listaespecialistas.get(i).especialidade==tproduto.TabChoc)&&(listaespecialistas.get(i).alocado==false)){
                    jTextareaadmin.append("Especialista adicionado");
                    jTextareaadmin.append("\n");
-                   Threadtabletesimples.especialista=bd.listaespecialistas.get(i);
+                   Threadtabletesimples.especialista=listaespecialistas.get(i);
                    //Threadtabletesimples.produto=new Produto("");
                    jTextareaadmin.append("Produto adicionado");
                    jTextareaadmin.append("\n");
-                   Threadtabletesimples.run();
-                   jTextareaadmin.append("Thread posta a produzir");
-                   jTextareaadmin.append("\n");
+                   listaingredientes.get(0).quantidadeemstock=listaingredientes.get(0).quantidadeemstock-100;
+                   Threadtabletesimples.go();
+                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
+                   jTextareaadmin.update(jTextareaadmin.getGraphics());
+            
                    
                 }
             }
         }
+        
+        
     }
     
     /**
@@ -301,7 +319,7 @@ public class ParachocMain extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        try {       
+       /* try {       
             FileOutputStream fout = new FileOutputStream("dados.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(bd);
@@ -311,7 +329,7 @@ public class ParachocMain extends javax.swing.JFrame {
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -324,7 +342,7 @@ public class ParachocMain extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        try {       
+       /* try {       
             FileOutputStream fout = new FileOutputStream("dados.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(bd);
@@ -334,12 +352,12 @@ public class ParachocMain extends javax.swing.JFrame {
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButtoningredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoningredientesActionPerformed
         // TODO add your handling code here:
-        bd.listaingredientes.get(0).quantidadeemstock=3333;
+        listaingredientes.get(0).quantidadeemstock=3333;
     }//GEN-LAST:event_jButtoningredientesActionPerformed
 
     /**

@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  */
 public class UnidadeProducao implements Runnable{
     public Produto produto;
+    public tproduto tp;
     public Especialista especialista;
     public boolean uso=false;
     public int tempoexecucao=0;
@@ -22,35 +23,49 @@ public class UnidadeProducao implements Runnable{
     public UnidadeProducao(tproduto tp, Especialista e, Produto p){
         this.especialista=e;
         this.produto=p;
-        
+        this.tp=tp;
        
         if (tp==tproduto.TabChoc){
-            this.tempoexecucao=30;
+            this.tempoexecucao=3000;
         }
         else if (tp==tproduto.TabChocAmendPassas)
-            this.tempoexecucao=45;
+            this.tempoexecucao=4500;
         else if (tp==tproduto.TabChocCaram)
-            this.tempoexecucao=37;
+            this.tempoexecucao=3700;
         else
-            this.tempoexecucao=4;
+            this.tempoexecucao=400;
     }
     
     public void run(){
         this.setUso(true);
             try{
-                Thread.sleep(this.getTempoexecucao()); 
+                System.out.println("A produzir....."+this.tp);
+                Thread.sleep(this.getTempoexecucao());
+                System.out.println("Acabou de produzir....."+this.tp);
+                
             } 
             catch (InterruptedException ex) {
                 Logger.getLogger(UnidadeProducao.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
     
+    public void go() {
+        if (thread == null || (!thread.isAlive())) {
+            thread = new Thread(this);
+                        
+            //thread.run(); //Esperimentar sem thread.
+            thread.start();
+        }
+    }
     
     public String toString(){
         String exit;
-        //exit=this.getNome();
-        //exit="Unidade de Producao:"+this.produto.nome+" Especialista Atribuido:"+this.especialista.nome+" A trbalhar: "+this.uso;
-        exit="ToString notworking";
+        if (this.uso==false)
+            exit="A unidade de producao "+this.tp+" esta parada";
+        
+        else
+            exit="Unidade de Producao:"+this.produto.nome+" Especialista Atribuido:"+this.especialista.nome+" A trbalhar: "+this.uso;
+        //exit="ToString notworking";
         return exit;
     }
 
