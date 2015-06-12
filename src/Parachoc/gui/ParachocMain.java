@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.text.DefaultCaret;
 /**
  *
  * @author a
@@ -20,17 +21,25 @@ import java.util.ArrayList;
 public class ParachocMain extends javax.swing.JFrame {
     ArrayList<Ingrediente> listaingredientes;
     ArrayList<Especialista> listaespecialistas;
+    
+    
+    UnidadeProducao Threadtabletesimples;
+    UnidadeProducao Threadtableteamendoas;
+    UnidadeProducao Threadtabletecaramelo;
+    UnidadeProducao Threadamendoas;
+    
+    
     /**
      * Creates new form ParachocMain2
      */
 
     
-    public void adiciona_log(String s){
+public void adiciona_log(String s){
         
-       jTextareaadmin.append(s);
-       jTextareaadmin.append("\n");
-       jTextareaadmin.update(jTextareaadmin.getGraphics());
-    }
+    jTextareaadmin.append(s);
+    jTextareaadmin.append("\n");
+    jTextareaadmin.update(jTextareaadmin.getGraphics());
+}
     
     public ParachocMain() {
         initComponents();
@@ -47,8 +56,8 @@ public class ParachocMain extends javax.swing.JFrame {
         listaespecialistas = new ArrayList();
         
         // Criacao manual para testes //NAO APAGAR
-        listaingredientes.add(new Ingrediente("Cacau",1000));
-        this.adiciona_log("Adicionado 1000g de cacau");
+        listaingredientes.add(new Ingrediente("Cacau",500));
+        this.adiciona_log("Adicionado 500g de cacau");
         listaingredientes.add(new Ingrediente("Amendoas",500));
         this.adiciona_log("Adicionado 500g de amendoas");
         listaingredientes.add(new Ingrediente("Caramelo",250));
@@ -66,17 +75,18 @@ public class ParachocMain extends javax.swing.JFrame {
                 jTextareaarmazem.append(listaingredientes.get(i).toString());
             }
         }
+      
         
-        UnidadeProducao Threadtabletesimples=new UnidadeProducao(tproduto.TabChoc,new Especialista(),new Produto());
-        //this.adiciona_log("Thread Threadtabletesimples criada");
+        /*Threadtabletesimples=new UnidadeProducao(tproduto.TabChoc);
+        this.adiciona_log("Thread Threadtabletesimples criada");
         
-        UnidadeProducao Threadtableteamendoas=new UnidadeProducao(tproduto.TabChocAmendPassas,null,null);
+        Threadtableteamendoas=new UnidadeProducao(tproduto.TabChocAmendPassas);
         this.adiciona_log("Thread Threadtableteamendoas criada");
-        UnidadeProducao Threadtabletecaramelo=new UnidadeProducao(tproduto.TabChocCaram, null, null);
+        Threadtabletecaramelo=new UnidadeProducao(tproduto.TabChocCaram);
         this.adiciona_log("Thread Threadtabletecaramelo criada");
-        UnidadeProducao Threadamendoas=new UnidadeProducao(tproduto.AmendChoc,null,null);
-        this.adiciona_log("Thread Threadamendoas criada");
-        
+        Threadamendoas=new UnidadeProducao(tproduto.AmendChoc);
+        this.adiciona_log("Thread Threadamendoas criada");*/
+       /*
         jTextareauproducao.append(Threadtabletesimples.toString());
         jTextareauproducao.append("\n");
         jTextareauproducao.append("\n");
@@ -86,7 +96,7 @@ public class ParachocMain extends javax.swing.JFrame {
         jTextareauproducao.append(Threadtabletecaramelo.toString());
         jTextareauproducao.append("\n");
         jTextareauproducao.append("\n");
-        jTextareauproducao.append(Threadamendoas.toString());
+        jTextareauproducao.append(Threadamendoas.toString());*/
         
         listaespecialistas.add(new Especialista("Luis Franco",tproduto.TabChoc));
         this.adiciona_log("Especialista Luis Franco criado");
@@ -96,16 +106,16 @@ public class ParachocMain extends javax.swing.JFrame {
         this.adiciona_log("Especialista Goncalo Faria criado");
         listaespecialistas.add(new Especialista("Luis Filipe Faria",tproduto.AmendChoc));
         this.adiciona_log("Especialista Luis Filipe Faria criado");
-        listaespecialistas.add(new Especialista("Jacques Arsac",tproduto.TabChoc));
+        /*listaespecialistas.add(new Especialista("Jacques Arsac",tproduto.TabChoc));
         this.adiciona_log("Especialista Jacques Arsac criado");
         listaespecialistas.add(new Especialista("Enviusamento",tproduto.TabChocAmendPassas));
         this.adiciona_log("Especialista Enviusamento criado");
         listaespecialistas.add(new Especialista("Tijolosde8",tproduto.TabChocCaram));
         this.adiciona_log("Especialista Tijolosde8 criado");
         listaespecialistas.add(new Especialista("Erasmus",tproduto.AmendChoc));
-        this.adiciona_log("Especialista Erasmus criado");
+        this.adiciona_log("Especialista Erasmus criado");*/
         
-        for (int i=0; i<listaespecialistas.size();i++){
+        /*for (int i=0; i<listaespecialistas.size();i++){
            // jTextareaarmazem.
             if (jTextareaespecialistas.getText().compareTo("")==0)
                 jTextareaespecialistas.append(listaespecialistas.get(i).toString());
@@ -114,30 +124,7 @@ public class ParachocMain extends javax.swing.JFrame {
                 jTextareaespecialistas.append("\n");
                 jTextareaespecialistas.append(listaespecialistas.get(i).toString());
             }
-        }
-        
-        
-        if (listaingredientes.get(0).quantidadeemstock>99){
-            int ntabletes=listaingredientes.get(0).quantidadeemstock/100;
-            for (int i=0;i<listaespecialistas.size();i++){
-                if ((listaespecialistas.get(i).especialidade==tproduto.TabChoc)&&(listaespecialistas.get(i).alocado==false)){
-                   jTextareaadmin.append("Especialista adicionado");
-                   jTextareaadmin.append("\n");
-                   Threadtabletesimples.especialista=listaespecialistas.get(i);
-                   //Threadtabletesimples.produto=new Produto("");
-                   jTextareaadmin.append("Produto adicionado");
-                   jTextareaadmin.append("\n");
-                   listaingredientes.get(0).quantidadeemstock=listaingredientes.get(0).quantidadeemstock-100;
-                   Threadtabletesimples.go();
-                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
-                   jTextareaadmin.update(jTextareaadmin.getGraphics());
-            
-                   
-                }
-            }
-        }
-        
-        
+        } */ 
     }
     
     /**
@@ -167,6 +154,7 @@ public class ParachocMain extends javax.swing.JFrame {
         jLabeladmin = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextareaadmin = new javax.swing.JTextArea();
+        butao_iniciar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -174,6 +162,7 @@ public class ParachocMain extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parachoc by VLG  v1.0");
@@ -266,6 +255,13 @@ public class ParachocMain extends javax.swing.JFrame {
 
         jPanelprincipal.add(jPaneladmin);
 
+        butao_iniciar.setText("Iniciar...");
+        butao_iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butao_iniciarActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Gerir");
 
         jMenuItem2.setText("Gravar BD");
@@ -296,6 +292,15 @@ public class ParachocMain extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("About");
+
+        jMenuItem4.setText("Creditos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -305,13 +310,19 @@ public class ParachocMain extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelprincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(196, 196, 196)
+                .addComponent(butao_iniciar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelprincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(46, 46, 46))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butao_iniciar)
+                .addGap(11, 11, 11))
         );
 
         pack();
@@ -357,48 +368,277 @@ public class ParachocMain extends javax.swing.JFrame {
 
     private void jButtoningredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoningredientesActionPerformed
         // TODO add your handling code here:
-        listaingredientes.get(0).quantidadeemstock=3333;
+        String ingredientesadicionados="";
+        int cacau=500;
+        int amendoas=500;
+        int caramelo=250;
+        int passas=125;
+        
+        listaingredientes.get(0).quantidadeemstock=listaingredientes.get(0).quantidadeemstock+cacau;
+        listaingredientes.get(1).quantidadeemstock=listaingredientes.get(1).quantidadeemstock+amendoas;
+        listaingredientes.get(2).quantidadeemstock=listaingredientes.get(2).quantidadeemstock+caramelo;
+        listaingredientes.get(3).quantidadeemstock=listaingredientes.get(3).quantidadeemstock+passas;
+        
+        jTextareaarmazem.setText(null);
+        for (int i=0; i<listaingredientes.size();i++){
+           // jTextareaarmazem.
+            if (jTextareaarmazem.getText().compareTo("")==0)
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
+            else{
+                jTextareaarmazem.append("\n");
+                jTextareaarmazem.append("\n");
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
+            }
+        }
+        jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+        ingredientesadicionados="Adicionado cacau:"+cacau+" Amendoas:"+amendoas+" Caramelo:"+caramelo+" Passas:"+passas;
+        
+        jTextareaadmin.append(ingredientesadicionados);
+        jTextareaadmin.append("\n");
+        
+        DefaultCaret caret = (DefaultCaret)jTextareaadmin.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        verificaproducao();
     }//GEN-LAST:event_jButtoningredientesActionPerformed
 
+    
+    
+    private void jtextespecialitas(){
+        
+        jTextareaespecialistas.setText("");
+        for (int i=0; i<listaespecialistas.size();i++){
+           
+            if (jTextareaespecialistas.getText().compareTo("")==0){
+                if (listaespecialistas.get(i).isAlocado()){
+                    jTextareaespecialistas.setForeground(Color.green);
+                    //System.out.println("Meteu verde aqui 1");
+                    jTextareaespecialistas.append(listaespecialistas.get(i).toString());
+                }
+                else{
+                    jTextareaespecialistas.setForeground(Color.red);
+                    //System.out.println("Meteu vermelho aqui 1");
+                    jTextareaespecialistas.append(listaespecialistas.get(i).toString());
+                    
+                }   
+            }
+            else{
+                //jTextareaespecialistas.setForeground(Color.red);
+                jTextareaespecialistas.append("\n");
+                jTextareaespecialistas.append("\n");
+                if (listaespecialistas.get(i).alocado==true){
+                    jTextareaespecialistas.setForeground(Color.green);
+                    //System.out.println("Meteu verde aqui 2");
+                    jTextareaespecialistas.append(listaespecialistas.get(i).toString());
+                }
+                else{
+                    jTextareaespecialistas.setForeground(Color.red);
+                    //System.out.println("Meteu vermelho aqui 2");
+                    jTextareaespecialistas.append(listaespecialistas.get(i).toString());
+                    
+                }
+                
+            }
+            //jTextareaespecialistas.setForeground(Color.black);
+        }  
+        System.out.println("Actualizada jtextareaespecialistas!!!!");
+    }
+    
+    private void jtextarmazem(){
+        jTextareaarmazem.setText(null);
+        for (int i=0; i<listaingredientes.size();i++){
+           // jTextareaarmazem.
+            if (jTextareaarmazem.getText().compareTo("")==0)
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
+            else{
+                jTextareaarmazem.append("\n");
+                jTextareaarmazem.append("\n");
+                jTextareaarmazem.append(listaingredientes.get(i).toString());
+            }
+        }
+        jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+        
+    }
+    
+    private void verificaproducao(){
+        
+    int qaproduzir=0;
+    
+    /* listaingredientes.add(new Ingrediente("Cacau",500));
+        this.adiciona_log("Adicionado 500g de cacau");
+        listaingredientes.add(new Ingrediente("Amendoas",500));
+        this.adiciona_log("Adicionado 500g de amendoas");
+        listaingredientes.add(new Ingrediente("Caramelo",250));
+        this.adiciona_log("Adicionado 250g de caramelo");
+        listaingredientes.add(new Ingrediente("Passas",125));
+        this.adiciona_log("Adicionado 125g de passas");
+    
+    Tabeletesdechocolate(simples)(TabChoc):100gr,
+    Tabeletes de chocolate c/ amêndoas e passas (TabChocAmendPassas): 150gr,
+    Tabeletesdechocolatec/caramelo(TabChocCaram):125gr,
+    Amêndoas de chocolate (AmendChoc): 5gr, e ovos da páscoa(OvoPascoa): 15gr.
+      */
+    if ((listaingredientes.get(1).quantidadeemstock>24)&&(listaingredientes.get(2).quantidadeemstock>24)&&(listaingredientes.get(0).quantidadeemstock>99)){
+       for (int i=0;i<listaespecialistas.size();i++){
+                if ((listaespecialistas.get(i).especialidade==tproduto.TabChocAmendPassas)&&(listaespecialistas.get(i).alocado==false)){
+                   jTextareaadmin.append("Especialista adicionado"+listaespecialistas.get(i).toString());
+                   listaespecialistas.get(i).setEmespera(qaproduzir);
+                   jTextareaadmin.append("\n");
+                   Threadtableteamendoas.especialista=listaespecialistas.get(i);
+                   jTextareaadmin.append("\n");
+                   qaproduzir=1;
+                   Threadtableteamendoas.especialista.setEmespera(qaproduzir);
+                   for (int j=0;j<qaproduzir;j++){
+                    
+                   listaingredientes.get(0).setQuantidadeemstock(listaingredientes.get(0).quantidadeemstock-100);
+                   listaingredientes.get(1).setQuantidadeemstock(listaingredientes.get(1).quantidadeemstock-25);
+                   listaingredientes.get(2).setQuantidadeemstock(listaingredientes.get(2).quantidadeemstock-25);
+                   
+                   Threadtableteamendoas.setUso(true);
+                   listaespecialistas.get(i).alocado=true;
+                   System.out.println(Threadtableteamendoas.toString());
+                   jtextarmazem();
+                   jtextespecialitas();
+                   jtextunidadesproducao();
+                   jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+                   jTextareauproducao.update(jTextareauproducao.getGraphics());
+                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
+                   jTextareaadmin.update(jTextareaadmin.getGraphics());
+                   Threadtableteamendoas.run();
+ 
+                   Threadtableteamendoas.setUso(false);
+                   
+                   Threadtableteamendoas.especialista.setEmespera(Threadtableteamendoas.especialista.getEmespera()-1);
+                   jTextareauproducao.setForeground(Color.white);
+                   listaespecialistas.get(i).alocado=false;
+                   jtextespecialitas();
+                   jtextunidadesproducao();
+                   jtextarmazem();
+                   jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+                   jTextareauproducao.update(jTextareauproducao.getGraphics());
+                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
+                   jTextareaadmin.update(jTextareaadmin.getGraphics());
+                   
+                }
+                   Threadtableteamendoas.especialista=null;
+                   break;
+                }
+            } 
+        
+    }
+    
+    
+    if (listaingredientes.get(0).quantidadeemstock>99){
+        qaproduzir=listaingredientes.get(0).quantidadeemstock/100;
+        System.out.println("Quantidade a produzir e: "+qaproduzir);
+        for (int i=0;i<listaespecialistas.size();i++){
+                if ((listaespecialistas.get(i).especialidade==tproduto.TabChoc)&&(listaespecialistas.get(i).alocado==false)){
+                   jTextareaadmin.append("Especialista adicionado"+listaespecialistas.get(i).toString());
+                   listaespecialistas.get(i).setEmespera(qaproduzir);
+                   jTextareaadmin.append("\n");
+                   Threadtabletesimples.especialista=listaespecialistas.get(i);
+                   jTextareaadmin.append("\n");
+                   for (int j=0;j<qaproduzir;j++){
+                    
+                   listaingredientes.get(0).setQuantidadeemstock(listaingredientes.get(0).quantidadeemstock-100);
+                   Threadtabletesimples.setUso(true);
+                   listaespecialistas.get(i).alocado=true;
+                   System.out.println(Threadtabletesimples.toString());
+                   jtextarmazem();
+                   jtextespecialitas();
+                   jtextunidadesproducao();
+                   jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+                   jTextareauproducao.update(jTextareauproducao.getGraphics());
+                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
+                   jTextareaadmin.update(jTextareaadmin.getGraphics());
+                   Threadtabletesimples.run();
+ 
+                   Threadtabletesimples.setUso(false);
+                   
+                   Threadtabletesimples.especialista.setEmespera(Threadtabletesimples.especialista.getEmespera()-1);
+                   jTextareauproducao.setForeground(Color.white);
+                   listaespecialistas.get(i).alocado=false;
+                   jtextespecialitas();
+                   jtextunidadesproducao();
+                   jtextarmazem();
+                   jTextareaarmazem.update(jTextareaarmazem.getGraphics());
+                   jTextareauproducao.update(jTextareauproducao.getGraphics());
+                   jTextareaespecialistas.update(jTextareaespecialistas.getGraphics());
+                   jTextareaadmin.update(jTextareaadmin.getGraphics());
+                   
+                }
+                   Threadtabletesimples.especialista=null;
+                   break;
+                }
+            }
+        }
+    
+    }
+    
+    private void butao_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butao_iniciarActionPerformed
+        // TODO add your handling code here:
+        butao_iniciar.setEnabled(false);
+        
+        Threadtabletesimples=new UnidadeProducao(tproduto.TabChoc);
+        this.adiciona_log("Thread Threadtabletesimples criada");
+        
+        Threadtableteamendoas=new UnidadeProducao(tproduto.TabChocAmendPassas);
+        this.adiciona_log("Thread Threadtableteamendoas criada");
+        Threadtabletecaramelo=new UnidadeProducao(tproduto.TabChocCaram);
+        this.adiciona_log("Thread Threadtabletecaramelo criada");
+        Threadamendoas=new UnidadeProducao(tproduto.AmendChoc);
+        this.adiciona_log("Thread Threadamendoas criada");
+        
+        verificaproducao();
+        
+        System.out.println("Chegou aqui 0!!!!");
+        
+    }//GEN-LAST:event_butao_iniciarActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        About ab = new About();
+        ab.setVisible(true);
+        //jPanelprincipal.getLayout().show(jPanelprincipal, "about");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jtextunidadesproducao(){
+        
+        jTextareauproducao.setText("");
+        jTextareauproducao.append(Threadtabletesimples.toString());
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append(Threadtableteamendoas.toString());
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append(Threadtabletecaramelo.toString());
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append("\n");
+        jTextareauproducao.append(Threadamendoas.toString());
+        
+        if ((Threadtabletesimples.isUso())||(Threadtableteamendoas.isUso())||(Threadtabletecaramelo.isUso())||(Threadamendoas.isUso()))
+            jTextareauproducao.setBackground(Color.green);
+        else
+            jTextareauproducao.setBackground(Color.red);
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ParachocMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ParachocMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ParachocMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ParachocMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
+        
+        ParachocMain ex = new ParachocMain();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ParachocMain ex = new ParachocMain();
+                
                 ex.setVisible(true);
             }
         });
-        
+        System.out.println("Chegou ao fim do prog?");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butao_iniciar;
     private javax.swing.JButton jButtoningredientes;
     private javax.swing.JLabel jLabeladmin;
     private javax.swing.JLabel jLabelespecialistas;
@@ -410,6 +650,7 @@ public class ParachocMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanelArmazem;
     private javax.swing.JPanel jPanelProducao;
     private javax.swing.JPanel jPaneladmin;
