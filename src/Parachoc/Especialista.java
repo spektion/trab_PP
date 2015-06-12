@@ -15,7 +15,8 @@ public class Especialista{
      public String nome;
      public tproduto especialidade;
      public boolean alocado=false;
-     public ArrayList<Produto> listaprodutosempera;
+     public int emespera;
+     //public ArrayList<Produto> listaprodutosempera;
      
      
     public Especialista(){
@@ -25,13 +26,12 @@ public class Especialista{
     public Especialista(String n, tproduto p){
         this.nome=n;
         this.especialidade=p;
-        this.listaprodutosempera= new ArrayList();
         
     }
     
     public String toString(){
         String exit;
-        exit=this.getNome()+" Esp:"+this.getEspecialidade()+" A trab:" +this.isAlocado()+" Q Esp:"+this.getListaprodutosempera().size();
+        exit=this.getNome()+" Esp:"+this.getEspecialidade()+" A trab:" +this.isAlocado()+" Q Esp:"+this.emespera;
         
         
         return exit;
@@ -80,17 +80,19 @@ public class Especialista{
     }
 
     /**
-     * @return the listaprodutosempera
+     * @return the emespera
      */
-    public ArrayList<Produto> getListaprodutosempera() {
-        return listaprodutosempera;
+    public int getEmespera() {
+        return emespera;
     }
 
     /**
-     * @param listaprodutosempera the listaprodutosempera to set
+     * @param emespera the emespera to set
      */
-    public void setListaprodutosempera(ArrayList<Produto> listaprodutosempera) {
-        this.listaprodutosempera = listaprodutosempera;
+    public void setEmespera(int emespera) {
+        this.emespera = emespera;
     }
+
+    
      
 }
