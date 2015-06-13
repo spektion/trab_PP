@@ -169,13 +169,15 @@ public void adiciona_log(String s){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parachoc by VLG  v1.0");
+        setBackground(new java.awt.Color(102, 0, 0));
 
-        jPanelprincipal.setBackground(new java.awt.Color(0, 204, 204));
+        jPanelprincipal.setBackground(new java.awt.Color(102, 51, 0));
         jPanelprincipal.setLayout(new java.awt.GridLayout(2, 2));
 
-        jPanelProducao.setBackground(new java.awt.Color(0, 204, 204));
+        jPanelProducao.setBackground(new java.awt.Color(102, 51, 0));
         jPanelProducao.setLayout(new java.awt.BorderLayout());
 
+        jLabelpainelunidadesproducao.setForeground(new java.awt.Color(255, 255, 255));
         jLabelpainelunidadesproducao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelpainelunidadesproducao.setText("Unidades de Produção");
         jLabelpainelunidadesproducao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -192,9 +194,11 @@ public void adiciona_log(String s){
 
         jPanelprincipal.add(jPanelProducao);
 
-        jPanelArmazem.setBackground(new java.awt.Color(0, 204, 204));
+        jPanelArmazem.setBackground(new java.awt.Color(102, 51, 0));
+        jPanelArmazem.setForeground(new java.awt.Color(255, 255, 255));
         jPanelArmazem.setLayout(new java.awt.BorderLayout());
 
+        jLabelpainelarmazem.setForeground(new java.awt.Color(255, 255, 255));
         jLabelpainelarmazem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelpainelarmazem.setText("Armazém");
         jLabelpainelarmazem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -219,9 +223,11 @@ public void adiciona_log(String s){
 
         jPanelprincipal.add(jPanelArmazem);
 
-        jPanelespecialista.setBackground(new java.awt.Color(0, 204, 204));
+        jPanelespecialista.setBackground(new java.awt.Color(102, 51, 0));
+        jPanelespecialista.setForeground(new java.awt.Color(255, 255, 255));
         jPanelespecialista.setLayout(new java.awt.BorderLayout());
 
+        jLabelespecialistas.setForeground(new java.awt.Color(255, 255, 255));
         jLabelespecialistas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelespecialistas.setText("Especialistas");
         jLabelespecialistas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -238,9 +244,10 @@ public void adiciona_log(String s){
 
         jPanelprincipal.add(jPanelespecialista);
 
-        jPaneladmin.setBackground(new java.awt.Color(0, 204, 204));
+        jPaneladmin.setBackground(new java.awt.Color(102, 51, 0));
         jPaneladmin.setLayout(new java.awt.BorderLayout());
 
+        jLabeladmin.setForeground(new java.awt.Color(255, 255, 255));
         jLabeladmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabeladmin.setText("Administrador (Logger)");
         jLabeladmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -312,7 +319,7 @@ public void adiciona_log(String s){
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelprincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelprincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(butao_iniciar)
@@ -436,20 +443,6 @@ public void adiciona_log(String s){
         
     int qaproduzir=0;
     
-    /* listaingredientes.add(new Ingrediente("Cacau",500));
-        this.adiciona_log("Adicionado 500g de cacau");
-        listaingredientes.add(new Ingrediente("Amendoas",500));
-        this.adiciona_log("Adicionado 500g de amendoas");
-        listaingredientes.add(new Ingrediente("Caramelo",250));
-        this.adiciona_log("Adicionado 250g de caramelo");
-        listaingredientes.add(new Ingrediente("Passas",125));
-        this.adiciona_log("Adicionado 125g de passas");
-    
-    Tabeletesdechocolate(simples)(TabChoc):100gr,
-    Tabeletes de chocolate c/ amêndoas e passas (TabChocAmendPassas): 150gr,
-    Tabeletesdechocolatec/caramelo(TabChocCaram):125gr,
-    Amêndoas de chocolate (AmendChoc): 5gr, e ovos da páscoa(OvoPascoa): 15gr.
-      */
     if ((listaingredientes.get(1).quantidadeemstock>24)&&(listaingredientes.get(2).quantidadeemstock>24)&&(listaingredientes.get(0).quantidadeemstock>99)){
        for (int i=0;i<listaespecialistas.size();i++){
                 if ((listaespecialistas.get(i).especialidade==tproduto.TabChocAmendPassas)&&(listaespecialistas.get(i).alocado==false)){
@@ -569,9 +562,14 @@ public void adiciona_log(String s){
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        About ab = new About();
-        ab.setVisible(true);
-        //jPanelprincipal.getLayout().show(jPanelprincipal, "about");
+        About frameabout = new About();
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                System.out.println("Chegou aqui");
+                frameabout.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_jMenuItem4ActionPerformed
     private void leringredientes() throws IOException{
 
