@@ -5,7 +5,13 @@
  */
 package Parachoc;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +19,8 @@ import java.util.logging.Logger;
  *
  * @author a
  */
+
+
 public class UnidadeProducao implements Runnable{
     public Produto produto;
     public tproduto tp;
@@ -36,6 +44,50 @@ public class UnidadeProducao implements Runnable{
             this.tempoexecucao=3700;
         else
             this.tempoexecucao=400;
+    }
+    
+    public void finalizarproducao(tproduto t, Especialista e){
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String nomeFicheiro = t.name()+sdf.format(Calendar.getInstance().getTime()) + ".txt";
+        
+        File out = new File(nomeFicheiro);
+        
+        
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(out));
+            switch (t){
+                
+                case TabChoc:
+                    writer.write(t.name()+ " Com 100g de Cacau"+ "\n"+ "Especialista: "+e.nome+ "\n");
+                    
+                    break;
+                case TabChocAmendPassas:
+                    writer.write(t.name()+ " Com 100g de Cacau + 25g Amendoas + 25g Passas"+ "\n"+ "Especialista: "+e.nome+ "\n");
+                    break;
+                case TabChocCaram:
+                    writer.write(t.name()+ " Com 100g de Cacau + 25g Caramelo"+ "\n"+ "Especialista: "+e.nome+ "\n");
+                    break;
+                case AmendChoc:
+                    writer.write(t.name()+ " Com 5g de Cacau"+ "\n"+ "Especialista: "+e.nome+ "\n");
+                    break;
+            }
+        } catch(Exception ex){
+            ex.printStackTrace();
+        } finally {
+            //Fechar e libertar o ficheiro
+            try {
+                if (writer!=null) {
+                    writer.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        System.out.println(tp.name() + "Acabou de produzir" + out);
+
     }
     
     public void run(){
@@ -76,6 +128,7 @@ public class UnidadeProducao implements Runnable{
                     System.out.println("A produzir....."+this.tp);
                     Thread.sleep(this.getTempoexecucao());
                     System.out.println("Acabou de produzir....."+this.tp);
+                    finalizarproducao(this.tp,this.especialista);
                     this.uso=false;
                    // this.wait();
                     break;// Caso contrario nao sai do while

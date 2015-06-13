@@ -8,12 +8,17 @@ package Parachoc.gui;
 import java.awt.*;
 import javax.swing.*;
 import Parachoc.*;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.text.DefaultCaret;
+import sun.misc.IOUtils;
 /**
  *
  * @author a
@@ -143,9 +148,9 @@ public void adiciona_log(String s){
         jTextareauproducao = new javax.swing.JTextArea();
         jPanelArmazem = new javax.swing.JPanel();
         jLabelpainelarmazem = new javax.swing.JLabel();
-        jButtoningredientes = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextareaarmazem = new javax.swing.JTextArea();
+        jButtoningredientesler = new javax.swing.JButton();
         jPanelespecialista = new javax.swing.JPanel();
         jLabelespecialistas = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -155,18 +160,15 @@ public void adiciona_log(String s){
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextareaadmin = new javax.swing.JTextArea();
         butao_iniciar = new javax.swing.JButton();
+        jButtoningredientes = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parachoc by VLG  v1.0");
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jPanelprincipal.setBackground(new java.awt.Color(0, 204, 204));
         jPanelprincipal.setLayout(new java.awt.GridLayout(2, 2));
@@ -198,14 +200,6 @@ public void adiciona_log(String s){
         jLabelpainelarmazem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelArmazem.add(jLabelpainelarmazem, java.awt.BorderLayout.PAGE_START);
 
-        jButtoningredientes.setText("Carregar Ingredientes");
-        jButtoningredientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtoningredientesActionPerformed(evt);
-            }
-        });
-        jPanelArmazem.add(jButtoningredientes, java.awt.BorderLayout.PAGE_END);
-
         jTextareaarmazem.setColumns(20);
         jTextareaarmazem.setRows(5);
         jTextareaarmazem.setLineWrap(true);
@@ -214,6 +208,14 @@ public void adiciona_log(String s){
         jScrollPane1.setViewportView(jTextareaarmazem);
 
         jPanelArmazem.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jButtoningredientesler.setText("Ler Ficheiros Ingredientes");
+        jButtoningredientesler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtoningredienteslerActionPerformed(evt);
+            }
+        });
+        jPanelArmazem.add(jButtoningredientesler, java.awt.BorderLayout.PAGE_END);
 
         jPanelprincipal.add(jPanelArmazem);
 
@@ -262,24 +264,14 @@ public void adiciona_log(String s){
             }
         });
 
+        jButtoningredientes.setText("Carregar Ingredientes Manualmente");
+        jButtoningredientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtoningredientesActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Gerir");
-
-        jMenuItem2.setText("Gravar BD");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-        jMenu1.add(jSeparator1);
-
-        jMenuItem3.setText("Sair sem Gravar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
 
         jMenuItem1.setText("Sair");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -309,11 +301,12 @@ public void adiciona_log(String s){
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelprincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelprincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(196, 196, 196)
+                .addContainerGap()
                 .addComponent(butao_iniciar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtoningredientes))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,7 +314,9 @@ public void adiciona_log(String s){
                 .addContainerGap()
                 .addComponent(jPanelprincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(butao_iniciar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(butao_iniciar)
+                    .addComponent(jButtoningredientes))
                 .addGap(11, 11, 11))
         );
 
@@ -343,28 +338,6 @@ public void adiciona_log(String s){
         }*/
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        int result = JOptionPane.showConfirmDialog(null,"Deseja mesmo sair sem gravar?",null,JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION)
-            System.exit(0);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-       /* try {       
-            FileOutputStream fout = new FileOutputStream("dados.dat");
-            ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(bd);
-            oos.close();
-            System.out.println("SUCESSO");
-            JOptionPane.showMessageDialog(null, "Ficheiro de dados gravado com sucesso");
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }*/
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButtoningredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoningredientesActionPerformed
         // TODO add your handling code here:
@@ -600,6 +573,98 @@ public void adiciona_log(String s){
         ab.setVisible(true);
         //jPanelprincipal.getLayout().show(jPanelprincipal, "about");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void leringredientes() throws IOException{
+
+        try{
+            FileReader fileReader = new FileReader("input/cacau.txt");
+            BufferedReader reader = new BufferedReader(fileReader);
+        
+            String data = null;
+            while((data = reader.readLine()) != null){
+                listaingredientes.get(0).setQuantidadeemstock(listaingredientes.get(0).getQuantidadeemstock()+Integer.parseInt(data));
+                jtextarmazem();
+                adiciona_log("Adicionados "+data+"g de cacau via ficheiro");
+            }
+            fileReader.close();
+            reader.close();
+        }
+        catch(Exception ex){
+            System.out.println("Ficheiro de cacau não existe"+ex.getMessage());
+            adiciona_log("Ficheiro de cacau.txt inexistente");
+        }
+        
+        try{
+            FileReader fileReader = new FileReader("input/amendoas.txt");
+            BufferedReader reader = new BufferedReader(fileReader);
+        
+            String data = null;
+            while((data = reader.readLine()) != null){
+                listaingredientes.get(1).setQuantidadeemstock(listaingredientes.get(1).getQuantidadeemstock()+Integer.parseInt(data));
+                jtextarmazem();
+                adiciona_log("Adicionados "+data+"g de Amendoas via ficheiro");
+            }
+            fileReader.close();
+            reader.close();
+        }
+        catch(Exception ex){
+            System.out.println("Ficheiro de Amendoas não existe"+ex.getMessage());
+            adiciona_log("Ficheiro de amendoas.txt inexistente");
+        }
+        
+        //Caramelo
+        try{
+            FileReader fileReader = new FileReader("input/caramelo.txt");
+            BufferedReader reader = new BufferedReader(fileReader);
+        
+            String data = null;
+            while((data = reader.readLine()) != null){
+                listaingredientes.get(2).setQuantidadeemstock(listaingredientes.get(2).getQuantidadeemstock()+Integer.parseInt(data));
+                jtextarmazem();
+                adiciona_log("Adicionados "+data+"g de Caramelo via ficheiro");
+            }
+            fileReader.close();
+            reader.close();
+        }
+        catch(Exception ex){
+            System.out.println("Ficheiro de Caramelo não existe"+ex.getMessage());
+            adiciona_log("Ficheiro de caramelo.txt inexistente");
+        }
+        
+        //Passas
+        try{
+            FileReader fileReader = new FileReader("input/passas.txt");
+            BufferedReader reader = new BufferedReader(fileReader);
+        
+            String data = null;
+            while((data = reader.readLine()) != null){
+                listaingredientes.get(3).setQuantidadeemstock(listaingredientes.get(3).getQuantidadeemstock()+Integer.parseInt(data));
+                jtextarmazem();
+                adiciona_log("Adicionados "+data+"g de Passas via ficheiro");
+            }
+            fileReader.close();
+            reader.close();
+        }
+        catch(Exception ex){
+            System.out.println("Ficheiro de Passas não existe"+ex.getMessage());
+            adiciona_log("Ficheiro de passas.txt inexistente");
+        }
+        verificaproducao();
+    }
+    
+    private void jButtoningredienteslerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoningredienteslerActionPerformed
+        // TODO add your handling code here:
+        
+        try{
+            leringredientes();
+        }
+        catch(Exception e){
+            adiciona_log("Não existe essa directoria"+"/n");
+            System.out.println("Nao conseguiu ler ficheiros/Nao existe directoria: "+e.getMessage());
+            
+        }    
+    
+        
+    }//GEN-LAST:event_jButtoningredienteslerActionPerformed
 
     private void jtextunidadesproducao(){
         
@@ -640,6 +705,7 @@ public void adiciona_log(String s){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butao_iniciar;
     private javax.swing.JButton jButtoningredientes;
+    private javax.swing.JButton jButtoningredientesler;
     private javax.swing.JLabel jLabeladmin;
     private javax.swing.JLabel jLabelespecialistas;
     private javax.swing.JLabel jLabelpainelarmazem;
@@ -648,8 +714,6 @@ public void adiciona_log(String s){
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanelArmazem;
     private javax.swing.JPanel jPanelProducao;
@@ -660,7 +724,6 @@ public void adiciona_log(String s){
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextArea jTextareaadmin;
     private javax.swing.JTextArea jTextareaarmazem;
     private javax.swing.JTextArea jTextareaespecialistas;
